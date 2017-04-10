@@ -8,7 +8,7 @@ import org.mongodb.morphia.Morphia
 class MongoStore {
 
     private static final String MONGO_COLLECTION = "lunch"
-    private static final String MONGO_URI = "mongodb://..." + MONGO_COLLECTION
+    private static final String MONGO_URI = System.getenv("MONGO_URI")
 
     private final Morphia morphia
     final Datastore datastore
