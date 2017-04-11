@@ -1,1 +1,1 @@
-web: ./build/install/slack-lunch-spark/bin/slack-lunch-spark
+web: java $JAVA_OPTS -jar ./build/libs/slack-lunch-spark-0.0.1-SNAPSHOT-all.jar
