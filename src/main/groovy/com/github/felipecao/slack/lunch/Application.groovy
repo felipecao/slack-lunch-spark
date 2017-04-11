@@ -13,8 +13,14 @@ class Application {
 
     Application(MongoStore mongoStore) {
         port(getHerokuAssignedPort());
-        before("/*", { q, a -> log.info("Received api call") } );
-        get("/", {req, res -> "Slack-Lunch is working with Spark!"});
+        before("/*", { q, a ->
+            System.out.println(">>>>>>>>>>>> Received api call");
+            log.info("Received api call")
+        } );
+        get("/", {req, res ->
+            System.out.println(">>>>>>>>>>>> root resource is responsive");
+            return "Slack-Lunch is working with Spark!"
+        });
         path("/places", {
             post("/menu", new MenuCommand(mongoStore: mongoStore), new JsonTransformer());
             post("/show", new ShowCommand(mongoStore: mongoStore), new JsonTransformer());
@@ -24,10 +30,16 @@ class Application {
     private static int getHerokuAssignedPort() {
         ProcessBuilder processBuilder = new ProcessBuilder();
 
+        System.out.println(">>>>>>>>>>>> configuring port...");
+
         if (processBuilder.environment().get("PORT") != null) {
-            return Integer.parseInt(processBuilder.environment().get("PORT"));
+            int port = Integer.parseInt(processBuilder.environment().get("PORT"));
+
+            System.out.println(">>>>>>>>>>>>>>> using port: " + port);
+            return port;
         }
 
+        System.out.println(">>>>>>>>>>>>>>> using default port 4567");
         return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
     }
 
