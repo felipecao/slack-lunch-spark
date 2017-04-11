@@ -9,17 +9,15 @@ import static spark.Spark.*
 
 class Application {
 
-    private Logger log = LoggerFactory.getLogger(Application.class);
+    private static Logger log = LoggerFactory.getLogger(Application.class);
 
     Application(MongoStore mongoStore) {
         port(getHerokuAssignedPort());
         before("/*", { q, a ->
-            System.out.println(">>>>>>>>>>>> Received api call");
             log.info("Received api call")
         } );
         get("/", {req, res ->
-            System.out.println(">>>>>>>>>>>> root resource is responsive");
-            return "Slack-Lunch is working with Spark!"
+            "Slack-Lunch is working with Spark!"
         });
         path("/places", {
             post("/menu", new MenuCommand(mongoStore: mongoStore), new JsonTransformer());
@@ -30,16 +28,16 @@ class Application {
     private static int getHerokuAssignedPort() {
         ProcessBuilder processBuilder = new ProcessBuilder();
 
-        System.out.println(">>>>>>>>>>>> configuring port...");
+        log.info("Configuring port...");
 
         if (processBuilder.environment().get("PORT") != null) {
             int port = Integer.parseInt(processBuilder.environment().get("PORT"));
 
-            System.out.println(">>>>>>>>>>>>>>> using port: " + port);
+            log.info("Listening on port " + port);
             return port;
         }
 
-        System.out.println(">>>>>>>>>>>>>>> using default port 4567");
+        log.info("Listening on default port 4567");
         return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
     }
 
