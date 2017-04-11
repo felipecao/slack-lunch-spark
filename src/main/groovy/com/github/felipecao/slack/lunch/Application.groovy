@@ -13,6 +13,7 @@ class Application {
 
     Application(MongoStore mongoStore) {
         before("/*", { q, a -> log.info("Received api call") } );
+        get("/", {req, res -> "Slack-Lunch is working with Spark!"});
         path("/places", {
             post("/menu", new MenuCommand(mongoStore: mongoStore), new JsonTransformer());
             post("/show", new ShowCommand(mongoStore: mongoStore), new JsonTransformer());
