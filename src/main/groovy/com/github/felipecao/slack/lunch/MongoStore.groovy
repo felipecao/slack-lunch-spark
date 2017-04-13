@@ -1,5 +1,6 @@
 package com.github.felipecao.slack.lunch
 
+import com.github.felipecao.slack.lunch.model.Place
 import com.mongodb.MongoClient
 import com.mongodb.MongoClientURI
 import org.mongodb.morphia.Datastore
@@ -20,7 +21,7 @@ class MongoStore {
         datastore = morphia.createDatastore(new MongoClient(new MongoClientURI(MONGO_URI)), MONGO_COLLECTION);
     }
 
-    Datastore getDatastore() {
-        return datastore
+    List<Place> findAllPlaces() {
+        return datastore.createQuery(Place.class).asList()
     }
 }

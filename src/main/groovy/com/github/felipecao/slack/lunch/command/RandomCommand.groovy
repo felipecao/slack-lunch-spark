@@ -11,8 +11,7 @@ class RandomCommand extends BaseCommand {
     @Override
     protected def handle(def request) {
 
-        final Query<Place> query = mongoStore.datastore.createQuery(Place.class)
-        final List<Place> allPlaces = query.asList()
+        final List<Place> allPlaces = mongoStore.findAllPlaces()
         final Place place = allPlaces[random.nextInt(allPlaces.size())]
 
         return new SlackResponse("@${request.user_name} you should have lunch at: *${place.name}*")

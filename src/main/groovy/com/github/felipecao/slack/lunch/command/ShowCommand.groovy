@@ -9,8 +9,7 @@ class ShowCommand extends BaseCommand {
     @Override
     protected def handle(def request) {
 
-        final Query<Place> query = mongoStore.datastore.createQuery(Place.class)
-        final List<Place> places = query.asList()
+        final List<Place> places = mongoStore.findAllPlaces()
         final String names = places.name.collect{ n -> "*${n}*"}.join("\n")
 
         return new SlackResponse("@${request.user_name} these are the places in our database: \n${names}")
