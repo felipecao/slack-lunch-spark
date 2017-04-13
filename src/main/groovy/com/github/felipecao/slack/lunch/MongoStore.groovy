@@ -11,12 +11,16 @@ class MongoStore {
     private static final String MONGO_URI = System.getenv("MONGO_URI")
 
     private final Morphia morphia
-    final Datastore datastore
+    private final Datastore datastore
 
     MongoStore() {
         morphia = new Morphia();
         morphia.mapPackage("com.github.felipecao.slack.lunch.model")
 
         datastore = morphia.createDatastore(new MongoClient(new MongoClientURI(MONGO_URI)), MONGO_COLLECTION);
+    }
+
+    Datastore getDatastore() {
+        return datastore
     }
 }

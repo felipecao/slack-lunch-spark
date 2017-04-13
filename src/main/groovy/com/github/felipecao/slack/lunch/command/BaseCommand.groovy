@@ -15,7 +15,7 @@ abstract class BaseCommand implements Route {
     protected abstract Object handle(def request)
 
     @Override
-    Object handle(Request request, Response response) throws Exception {
+    def handle(Request request, Response response) throws Exception {
         response.type("application/json")
         return handle(jsonSlurper.parseText(request.body()))
     }

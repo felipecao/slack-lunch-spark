@@ -26,19 +26,11 @@ class Application {
     }
 
     private static int getHerokuAssignedPort() {
-        ProcessBuilder processBuilder = new ProcessBuilder();
+        Integer defaultPort = 4567;
+        String port = new ProcessBuilder().environment().getOrDefault("PORT", defaultPort.toString());
 
-        log.info("Configuring port...");
-
-        if (processBuilder.environment().get("PORT") != null) {
-            int port = Integer.parseInt(processBuilder.environment().get("PORT"));
-
-            log.info("Listening on port " + port);
-            return port;
-        }
-
-        log.info("Listening on default port 4567");
-        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
+        log.info("Listening on port " + port);
+        return Integer.valueOf(port);
     }
 
     static void main(String[] args) {

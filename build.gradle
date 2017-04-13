@@ -38,6 +38,7 @@ dependencies {
 
     testCompile('junit:junit:4.12')
     testCompile('com.tngtech.java:junit-dataprovider:1.12.0')
+	testCompile('org.spockframework:spock-core:1.0-groovy-2.4')
 }
 
 //this is required for hosting/deploying to heroku

@@ -7,7 +7,7 @@ import org.mongodb.morphia.query.Query
 class ShowCommand extends BaseCommand {
 
     @Override
-    protected Object handle(def request) {
+    protected def handle(def request) {
 
         final Query<Place> query = mongoStore.datastore.createQuery(Place.class)
         final List<Place> places = query.asList()
