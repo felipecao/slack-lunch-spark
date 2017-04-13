@@ -1,6 +1,7 @@
 package com.github.felipecao.slack.lunch
 
 import com.github.felipecao.slack.lunch.command.MenuCommand
+import com.github.felipecao.slack.lunch.command.RandomCommand
 import com.github.felipecao.slack.lunch.command.ShowCommand
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -22,6 +23,7 @@ class Application {
         path("/places", {
             post("/menu", new MenuCommand(mongoStore: mongoStore), new JsonTransformer());
             post("/show", new ShowCommand(mongoStore: mongoStore), new JsonTransformer());
+            post("/random", new RandomCommand(mongoStore: mongoStore), new JsonTransformer());
         });
     }
 
