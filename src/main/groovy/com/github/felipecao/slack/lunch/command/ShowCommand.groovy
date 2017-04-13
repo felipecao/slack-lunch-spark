@@ -10,6 +10,11 @@ class ShowCommand extends BaseCommand {
     protected def handle(def request) {
 
         final List<Place> places = mongoStore.findAllPlaces()
+
+        if (!places){
+            return new SlackResponse("@${request.user_name} there are no places yet! Why don't you try to create the first one by using the `/add` command?")
+        }
+
         final String names = places.name.collect{ n -> "*${n}*"}.join("\n")
 
         return new SlackResponse("@${request.user_name} these are the places in our database: \n${names}")

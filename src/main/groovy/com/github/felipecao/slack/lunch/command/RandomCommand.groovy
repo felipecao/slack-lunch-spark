@@ -12,6 +12,11 @@ class RandomCommand extends BaseCommand {
     protected def handle(def request) {
 
         final List<Place> allPlaces = mongoStore.findAllPlaces()
+
+        if (!allPlaces){
+            return new SlackResponse("@${request.user_name} there are no places yet! Why don't you try to create the first one by using the `/add` command?")
+        }
+
         final Place place = allPlaces[random.nextInt(allPlaces.size())]
 
         return new SlackResponse("@${request.user_name} you should have lunch at: *${place.name}*")

@@ -39,4 +39,23 @@ class RandomCommandSpec extends Specification {
         1 * store.findAllPlaces() >> PLACES_NAMES.collect { new Place(name: it) }
         1 * random.nextInt(2) >> 0
     }
+
+    def "'handle' suggests using `/add`"() {
+        given:
+        def user = "felipe"
+
+        and:
+        def request = [user_name: user]
+
+        when:
+        SlackResponse response = command.handle(request)
+
+        then:
+        response.response_type == "in_channel"
+        response.text == "@$user there are no places yet! Why don't you try to create the first one by using the `/add` command?"
+
+        and:
+        1 * store.findAllPlaces() >> []
+        0 * random.nextInt(_ as Integer)
+    }
 }
